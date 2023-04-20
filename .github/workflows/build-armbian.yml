@@ -222,7 +222,7 @@ jobs:
         run: |
           # Compile method and parameter description: https://docs.armbian.com/Developer-Guide_Build-Options
           cd build/
-              ./compile.sh RELEASE=${{ inputs.set_release }} BUILD_MINIMAL=${{ env.ARMBIAN_MINIMAL_OPTION }} \
+              sudo ./compile.sh RELEASE=${{ inputs.set_release }} BUILD_MINIMAL=${{ env.ARMBIAN_MINIMAL_OPTION }} \
                   BOARD=odroidn2 BRANCH=current BUILD_ONLY=default HOST=armbian BUILD_DESKTOP=no EXPERT=yes \
                   KERNEL_CONFIGURE=no CLEAN_LEVEL="make,cache,alldebs,sources" COMPRESS_OUTPUTIMAGE="sha"
           echo "build_tag=Armbian_${{ inputs.set_release }}${{ env.ARMBIAN_MINIMAL_TAG }}_$(date +"%m.%d.%H%M")" >> ${GITHUB_OUTPUT}
