@@ -200,7 +200,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
 
     steps:
@@ -239,7 +239,7 @@ jobs:
         run: |
           # Compile method and parameter description: https://docs.armbian.com/Developer-Guide_Build-Options
           cd build/
-              ./compile.sh RELEASE=${{ inputs.set_release }} BOARD=odroidn2 BRANCH=current BUILD_MINIMAL=no \
+              ./compile.sh RELEASE=${{ inputs.set_release }} BOARD=odroidn2 BRANCH=current BUILD_MINIMAL=yes \
                            BUILD_ONLY=default HOST=armbian BUILD_DESKTOP=no EXPERT=yes KERNEL_CONFIGURE=no \
                            COMPRESS_OUTPUTIMAGE="sha" SHARE_LOG=yes
           echo "status=success" >> ${GITHUB_OUTPUT}
@@ -264,7 +264,7 @@ jobs:
           tag: ${{ steps.clean.outputs.build_tag }}
           artifacts: build/output/images/*
           allowUpdates: true
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Rebuild Armbian
         uses: ophub/amlogic-s9xxx-armbian@main
@@ -279,7 +279,7 @@ jobs:
           kernel_usage: ${{ inputs.kernel_usage }}
           armbian_fstype: ${{ inputs.armbian_fstype }}
           builder_name: ${{ inputs.builder_name }}
-          gh_token: ${{ secrets.GH_TOKEN }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Rebuild image to Release
         uses: ncipollo/release-action@main
@@ -290,7 +290,7 @@ jobs:
           allowUpdates: true
           removeArtifacts: false
           replacesArtifacts: true
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           body: |
             ### Armbian Image information
             - Default username: root
