@@ -52,7 +52,7 @@ inputs:
   kernel_version:
     description: "Select kernel version"
     required: false
-    default: "6.6.y"
+    default: "6.1.y_5.15.y"
   kernel_auto:
     description: "Auto use the latest kernel"
     required: false
